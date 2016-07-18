@@ -1,1 +1,1 @@
-ConfigMaster
+ConfigMaster WebUI
