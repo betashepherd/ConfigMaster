@@ -1,0 +1,22 @@
+<?php
+$title = '删除应用';
+$this->headTitle($title);
+?>
+<h3>
+	<?php echo $this->escapeHtml($title); ?>
+</h3>
+
+<hr>
+<p>
+	确认要删除  '<?php echo $this->escapeHtml($app['name']); ?> '
+</p>
+
+<form
+	action="<?php echo $this->url('dashboard/default',array('controller' => 'product', 'action' => 'delete', 'id' => $this->id)); ?>"
+	method="post">
+	<div>
+		<input type="hidden" name="id" value="<?php echo $app['_id']->__toString(); ?>" /> 
+		<input class="btn btn-danger" type="submit" name="del" value="Yes" /> 
+		<input class="btn btn-outline btn-primary btn-lg" type="submit" name="del" value="No" />
+	</div>
+</form>

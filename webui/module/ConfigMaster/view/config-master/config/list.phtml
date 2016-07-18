@@ -1,0 +1,111 @@
+<div class="panel-body">
+<h3>配置列表</h3>
+<hr>
+	<div class="table-responsive">
+	
+		<select class="form-control" name="applistselect" id="applistselect">
+		<option  <?php if($appid == 0) echo 'selected="selected" '?> value="0">全部应用</option>
+		<?php foreach ($app as $aid => $a) : ?>
+        <option <?php if($appid == $a['_id']->__toString()) echo 'selected="selected" '?> value="<?php echo $a['_id']->__toString();?>"><?php echo $a['name'];?></option>
+        <?php endforeach;?>
+        </select>
+<hr>
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+				    <th>#</th>
+				    <th>AppName</th>
+					<th>Key</th>
+					<th>说明</th>
+					<th>操作人</th>
+					<th>最近修改</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php foreach ($config as $aid => $c) : ?>
+				<tr>
+					<!-- <td><?php echo $c['_id']->__toString(); ?></td> -->
+					<td><?php echo $aid + 1; ?>
+					<td><?php echo $appname[$c['appid']]; ?></td>
+					<td><?php echo $c['key']; ?></td>
+					<!-- <td><?php echo $c['version']; ?></td> -->
+					<td><?php echo $c['desc']; ?></td>
+					<td><?php echo $c['operator']; ?></td>
+					<td><?php echo date('Y-m-d H:i:s', $c['timestamp']); ?></td>
+					<td><a href="javascript:;" class="appliy_config" configid="<?php echo $c['_id']->__toString();?>">下发</a>&nbsp;|&nbsp;<a href="<?php echo $this->url('dashboard/default', array('controller' => 'config', 'action' => 'edit')) . $c['_id']->__toString(); ?>">编辑</a>&nbsp;|&nbsp;<a href="<?php echo $this->url('dashboard/default', array('controller' => 'config', 'action' => 'delete')) . $c['_id']->__toString(); ?>">删除</a></td>
+				</tr>
+			<?php endforeach; ?>
+			</tbody>
+		</table>
+	</div>
+	<hr>
+	<!-- /.table-responsive -->
+
+</div>
+
+<div id="dialog" title="下发配置">
+
+</div>
+
+<script type="text/javascript">
+$(function(){
+    
+	$("#applistselect").change(function(){
+		var jumpurl = "<?php echo $this->url('dashboard/default', array('controller' => 'config', 'action' => 'list')) . "?appid=";?>"
+		window.location.href = jumpurl + $(this).val()
+	});
+
+    $( "#dialog" ).dialog({
+        autoOpen: false,
+        modal: true,
+        minWidth: 150,
+        minHeight: 200,
+        show: {
+          effect: "blind",
+          duration: 500
+        },
+        hide: {
+          effect: "explode",
+          duration: 500
+        }
+      });
+   
+      $( ".appliy_config" ).on( "click", function() {
+        var configid = $(this).attr("configid")
+        var button = '<hr> <input id="apply" name="apply" type="button" class="btn btn-lg btn-block btn-success" value="下发">'
+        var s_option_header = '<label>选择版本</label>'
+        var s_option = '<select id="his_version" name="his_version" class="form-control">'
+        $.getJSON('/api/config/' + configid, function(result) {
+        	$( "#dialog" ).empty()
+        	$( "#dialog" ).append(s_option_header)
+            $.each(result, function(i, field) {
+            	s_option = s_option + '<option value="' + i + '">' + field + '</option>'
+            });
+        	$( "#dialog" ).append(s_option + '</select>' + button)
+
+        	$("#apply").click(function(){
+                var version  = $("#his_version").find("option:selected").text();
+                var configid = $("#his_version").val();
+                $.ajax({
+                    type:'GET',
+                    dataType:'json',
+                    url:'/api/applyconfig?version' + version + '&id=' + configid,
+                    success:function(data) {
+                        if(data.code == 1) {
+                            alert('apply config succeed')
+                            window.location.reload()
+                        } else {
+                            alert('apply config failed')
+                        }
+                    },
+                    error:function() {
+                    	alert('apply failed')
+                    }
+                })
+            });
+        });
+        $( "#dialog" ).dialog( "open" );
+      });
+});
+</script>

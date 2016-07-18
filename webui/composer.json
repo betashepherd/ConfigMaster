@@ -1,0 +1,14 @@
+{
+  "name" : "ConfigMaster",
+  "description" : "ConfigMaster",
+  "version" : "1.0.0",
+  "require" : {
+    "php" : ">=5.3.3",
+    "zendframework/zendframework" : "2.4.10",
+    "zendframework/zftool" : "dev-master",
+    "mongodb/mongodb" : "1.0.2"
+  },
+  "autoload" : {
+  	"psr-4": {"Utils\\": "utils"}
+  }
+}
