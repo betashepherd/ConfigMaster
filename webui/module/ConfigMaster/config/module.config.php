@@ -6,7 +6,9 @@ return array(
             'ConfigMaster\Controller\Index' => 'ConfigMaster\Controller\IndexController',
             'ConfigMaster\Controller\User' => 'ConfigMaster\Controller\UserController',
             'ConfigMaster\Controller\Config' => 'ConfigMaster\Controller\ConfigController',
-            'ConfigMaster\Controller\Product' => 'ConfigMaster\Controller\ProductController'
+            'ConfigMaster\Controller\Product' => 'ConfigMaster\Controller\ProductController',
+            'ConfigMaster\Controller\Channel' => 'ConfigMaster\Controller\ChannelController',
+            'ConfigMaster\Controller\Country' => 'ConfigMaster\Controller\CountryController'
         )
     ),
 
@@ -48,7 +50,7 @@ return array(
     
     'view_manager' => array(
         'template_path_stack' => array(
-            'album' => __DIR__ . '/../view'
+            'config' => __DIR__ . '/../view'
         )
     )
 );
