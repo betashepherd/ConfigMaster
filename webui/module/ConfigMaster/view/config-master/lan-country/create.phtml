@@ -9,7 +9,7 @@ $this->headTitle($title);
 	<table class="table table-hover">
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url('dashboard/default', array('controller' => 'country', 'action' => 'create')));
+$form->setAttribute('action', $this->url('dashboard/default', array('controller' => 'lancountry', 'action' => 'create')));
 $form->prepare();
 echo $this->form()->openTag($form);
 ?>
