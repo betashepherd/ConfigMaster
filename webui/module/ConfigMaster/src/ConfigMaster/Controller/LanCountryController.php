@@ -6,19 +6,15 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use ConfigMaster\Form\LanCountryForm;
 use ConfigMaster\Form\LanCountryFormInputFilter;
+use ConfigMaster\PageLogic\LanCountry as LanCountryLogic;
 
-class CountryController extends AbstractActionController
+class LanCountryController extends AbstractActionController
 {
     protected $_pagelogic = null;
     
     public function __construct()
     {
-        //$this->_pagelogic = new LanCountryLogic();
-    }
-    
-    public function indexAction()
-    {
-        return new ViewModel();
+        $this->_pagelogic = new LanCountryLogic();
     }
 
     public function importAction()
@@ -39,8 +35,8 @@ class CountryController extends AbstractActionController
             $form->setInputFilter($inputfilter->getInputFilter());
             $form->setData($this->getRequest()->getPost());
             if($form->isValid()) {
-                $this->_app->create($this->_app->exchangeArray($form->getData()));
-                return $this->redirect()->toRoute('dashboard/default', array('controller' => 'channel', 'action' => 'list'));
+                $this->_pagelogic->create($this->_pagelogic->exchangeArray($form->getData()));
+                return $this->redirect()->toRoute('dashboard/default', array('controller' => 'lancountry', 'action' => 'list'));
             } else {
                 $form->get('submit')->setValue('保存');
                 return new ViewModel(array('form' => $form));

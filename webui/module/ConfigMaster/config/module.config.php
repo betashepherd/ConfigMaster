@@ -8,7 +8,7 @@ return array(
             'ConfigMaster\Controller\Config' => 'ConfigMaster\Controller\ConfigController',
             'ConfigMaster\Controller\Product' => 'ConfigMaster\Controller\ProductController',
             'ConfigMaster\Controller\Channel' => 'ConfigMaster\Controller\ChannelController',
-            'ConfigMaster\Controller\Country' => 'ConfigMaster\Controller\CountryController'
+            'ConfigMaster\Controller\LanCountry' => 'ConfigMaster\Controller\LanCountryController'
         )
     ),
 

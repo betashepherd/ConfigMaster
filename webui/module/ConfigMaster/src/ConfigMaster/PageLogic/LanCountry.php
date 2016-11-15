@@ -2,41 +2,41 @@
 
 namespace ConfigMaster\PageLogic;
 
-use ConfigMaster\DataLogic\App as AppDataLogic;
-use ConfigMaster\DataStruct\App as AppDataStruct;
+use ConfigMaster\DataLogic\LanCountry as LanCountryDataLogic;
+use ConfigMaster\DataStruct\LanCountry as LanCountryDataStruct;
 
-class App {
+class LanCountry {
     
     /**
-     * app data logic
-     * @var AppDataLogic
+     * data logic
+     * @var LanCountryDataLogic
      */
-    protected $_app;
+    protected $_datalogic;
     
     /**
-     * app data
-     * @var AppDataStruct
+     * lan country
+     * @var LanCountryDataStruct
      */
-    protected $_appData;
+    protected $_datastruct;
     
     public function __construct() {
-        $this->_app = new AppDataLogic();
-        $this->_appData = new AppDataStruct();
+        $this->_datalogic = new LanCountryDataLogic();
+        $this->_datastruct = new LanCountryDataStruct();
     }
     
     /**
-     * get all config
+     * get all lan country list
      * @return \MongoDB\Driver\Cursor
      */
     public function fetchAll() {
-        return $this->_app->fetchAll();
+        return $this->_datalogic->fetchAll();
         
     }
 
     /**
-     * 
+     * gen lancountry data struct
      * @param array $data
-     * @return \ConfigMaster\DataStruct\App
+     * @return \ConfigMaster\DataStruct\LanCountry
      */
     public function exchangeArray(array $data) {
         $id = (isset($data['id'])) ? $data['id'] : null;
@@ -45,23 +45,23 @@ class App {
         $operator = (isset($data['operator'])) ? $data['operator'] : 'administrator';
         $timestamp = time();
         
-        $this->_appData->setId($id);
-        $this->_appData->setName($appname);
-        $this->_appData->setDesc($desc);
-        $this->_appData->setOperator($operator);
-        $this->_appData->setTimestamp($timestamp);
+        $this->_datastruct->setId($id);
+        $this->_datastruct->setName($appname);
+        $this->_datastruct->setDesc($desc);
+        $this->_datastruct->setOperator($operator);
+        $this->_datastruct->setTimestamp($timestamp);
         
-        return $this->_appData;
+        return $this->_datastruct;
         
     }
     
     /**
-     * create app
-     * @param AppDataStruct $app
-     * @return \MongoDB\InsertOneResult
+     * create lan country
+     * @param LanCountryDataStruct $data
+     * @return Ambigous <\MongoDB\InsertOneResult, object, NULL>
      */
-    public function create(AppDataStruct $app) {
-        return $this->_app->save($app);
+    public function create(LanCountryDataStruct $data) {
+        return $this->_datalogic->save($data);
     }
     
     /**
