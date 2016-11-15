@@ -28,6 +28,16 @@ class ChannelController extends AbstractActionController
         return new ViewModel();
     }
 
+    public function listAction()
+    {
+        return new ViewModel();
+    }
+
+    public function createAction()
+    {
+        return new ViewModel();
+    }
+
 
 }
 
